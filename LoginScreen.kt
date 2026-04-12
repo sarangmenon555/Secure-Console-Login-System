@@ -106,7 +106,7 @@ class SecureConsoleUserManager(private val fileName: String, private val logFile
         users[email] = salt to hash
         saveUsers()
         log("Registered: $email")
-        return "✅ Registration successful."
+        return "Registration successful."
     }
 
     fun login(email: String, password: String): String {
@@ -115,7 +115,7 @@ class SecureConsoleUserManager(private val fileName: String, private val logFile
         val user = users[email] ?: return "No account found."
         if ((failedAttempts[email] ?: 0) >= maxAttempts) {
             log("Locked out: $email")
-            return "❌ Too many failed attempts. Account locked."
+            return "Too many failed attempts. Account locked."
         }
 
         val (salt, correctHash) = user
@@ -124,12 +124,12 @@ class SecureConsoleUserManager(private val fileName: String, private val logFile
         return if (inputHash == correctHash) {
             failedAttempts[email] = 0
             log("Login success: $email")
-            "✅ Login successful. Welcome, $email!"
+            "Login successful. Welcome, $email!"
         } else {
             val attempts = failedAttempts.getOrDefault(email, 0) + 1
             failedAttempts[email] = attempts
             log("Login failed: $email")
-            "❌ Incorrect password. Attempts left: ${maxAttempts - attempts}"
+            "Incorrect password. Attempts left: ${maxAttempts - attempts}"
         }
     }
 
@@ -138,14 +138,14 @@ class SecureConsoleUserManager(private val fileName: String, private val logFile
         val (salt, correctHash) = user
         val currentHash = hash(salt + currentPassword)
 
-        if (currentHash != correctHash) return "❌ Current password is incorrect."
+        if (currentHash != correctHash) return "Current password is incorrect."
 
         val newSalt = generateSalt()
         val newHash = hash(newSalt + newPassword)
         users[email] = newSalt to newHash
         saveUsers()
         log("Password changed: $email")
-        return "🔐 Password changed successfully."
+        return "Password changed successfully."
     }
 
     fun deleteAccount(email: String, password: String): String {
@@ -157,9 +157,9 @@ class SecureConsoleUserManager(private val fileName: String, private val logFile
             users.remove(email)
             saveUsers()
             log("Account deleted: $email")
-            "🗑️ Account for $email deleted successfully."
+            "Account for $email deleted successfully."
         } else {
-            "❌ Incorrect password. Account not deleted."
+            "Incorrect password. Account not deleted."
         }
     }
 
@@ -167,7 +167,7 @@ class SecureConsoleUserManager(private val fileName: String, private val logFile
         if (!isValidEmail(email)) return "Invalid email format."
         return if (users.containsKey(email)) {
             log("Recovery requested: $email")
-            "📧 Password recovery simulated for $email."
+            "Password recovery simulated for $email."
         } else {
             "No account found with this email."
         }
