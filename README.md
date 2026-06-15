@@ -32,9 +32,9 @@ activity log.
 
 ```
 secure-console-login/
-├── Main.kt           # Entry point + SecureConsoleUserManager class
-├── users.txt         # Auto-generated — stores registered users (hashed)
-├── log.txt           # Auto-generated — stores timestamped activity logs
+├── Main.kt   
+├── users.txt    
+├── log.txt        
 └── README.md
 ```
 
